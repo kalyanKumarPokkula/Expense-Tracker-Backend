@@ -1,41 +1,44 @@
 import { Schema, model, ObjectId } from "mongoose";
 import bcrypt, { hashSync } from "bcrypt";
-// import { SALT } from "../config/config";
+import { SALT } from "../config/config";
 
-interface User {
+interface IUser {
   name: string;
   email: string;
   password: string;
-  expenses: ObjectId[];
+  expenses: [Schema.Types.ObjectId];
 }
 
-const userSchema: Schema = new Schema<User>({
-  name: {
-    type: String,
-    required: true,
-  },
-  email: {
-    type: String,
-    required: true,
-    unique: true,
-  },
-  password: {
-    type: String,
-    required: true,
-    min: 3,
-  },
-  expenses: [
-    {
-      type: Schema.Types.ObjectId,
-      ref: "Expense",
+const userSchema: Schema = new Schema<IUser>(
+  {
+    name: {
+      type: String,
+      required: true,
     },
-  ],
-});
+    email: {
+      type: String,
+      required: true,
+      unique: true,
+    },
+    password: {
+      type: String,
+      required: true,
+      min: 3,
+    },
+    expenses: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: "Expense",
+      },
+    ],
+  },
+  { timestamps: true }
+);
 
-userSchema.pre<User>("save", function (next) {
+userSchema.pre<IUser>("save", function (next) {
   try {
-    const salt = bcrypt.genSaltSync(10);
-    const hashedPassword = bcrypt.hashSync(this.password, salt);
+    // const salt = bcrypt.genSaltSync(10);
+    const hashedPassword = bcrypt.hashSync(this.password, SALT);
     this.password = hashedPassword;
     return next();
   } catch (error) {
@@ -43,6 +46,6 @@ userSchema.pre<User>("save", function (next) {
   }
 });
 
-const User = model<User>("User", userSchema);
+const User = model<IUser>("User", userSchema);
 
-export default User;
+export { User, IUser };

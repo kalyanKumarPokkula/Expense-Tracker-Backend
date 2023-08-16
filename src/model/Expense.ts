@@ -1,31 +1,35 @@
-import { Schema, model, ObjectId } from "mongoose";
+import { Schema, model } from "mongoose";
 
-interface Expense {
+interface IExpense {
   date: string;
   price: string;
   title: string;
-  author: ObjectId;
+  author: Schema.Types.ObjectId;
 }
 
-const expenseSchema: Schema = new Schema<Expense>({
-  date: {
-    type: String,
-    required: true,
+const expenseSchema: Schema = new Schema<IExpense>(
+  {
+    date: {
+      type: String,
+      required: true,
+    },
+    price: {
+      type: String,
+      required: true,
+    },
+    title: {
+      type: String,
+      required: true,
+    },
+    author: {
+      type: Schema.Types.ObjectId,
+      ref: "User",
+      required: true,
+    },
   },
-  price: {
-    type: String,
-    required: true,
-  },
-  title: {
-    type: String,
-    required: true,
-  },
-  author: {
-    type: Schema.Types.ObjectId,
-    required: true,
-  },
-});
+  { timestamps: true }
+);
 
-const Expense = model<Expense>("Expense", expenseSchema);
+const Expense = model<IExpense>("Expense", expenseSchema);
 
-export default Expense;
+export { Expense, IExpense };

@@ -35,17 +35,6 @@ const userSchema: Schema = new Schema<IUser>(
   { timestamps: true }
 );
 
-userSchema.pre<IUser>("save", function (next) {
-  try {
-    // const salt = bcrypt.genSaltSync(10);
-    const hashedPassword = bcrypt.hashSync(this.password, SALT);
-    this.password = hashedPassword;
-    return next();
-  } catch (error) {
-    console.log(error);
-  }
-});
-
-const User = model<IUser>("User", userSchema);
+const User = model("User", userSchema);
 
 export { User, IUser };

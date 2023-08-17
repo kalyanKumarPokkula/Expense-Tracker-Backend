@@ -12,9 +12,13 @@ class ExpenseService {
     }
     async create(data, id) {
         try {
+            console.log(data);
+            console.log(id);
             let expense = await this.expenseRepository.create(data);
+            console.log(expense);
             if (expense) {
                 let user = await this.userRepository.findById(id);
+                console.log(user);
                 if (user) {
                     user.expenses.push(expense);
                     await user.save();

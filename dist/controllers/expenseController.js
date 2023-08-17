@@ -8,7 +8,12 @@ const expenseService_1 = __importDefault(require("../service/expenseService"));
 const expenseService = new expenseService_1.default();
 const create = async (req, res) => {
     try {
-        const newBody = { ...req.body, date: new Date(), author: req.body.user.id };
+        const newBody = {
+            price: req.body.price,
+            title: req.body.title,
+            date: req.body.date,
+            author: req.body.user.id,
+        };
         console.log(req.body.user.id);
         let response = await expenseService.create(newBody, req.body.user.id);
         return res.status(201).json({
@@ -33,7 +38,7 @@ const getExpenses = async (req, res) => {
         let response = await expenseService.getUserExpenses(req.body.user.id);
         return res.status(201).json({
             data: response === null || response === void 0 ? void 0 : response.expenses,
-            message: "Successfully created a expenseData",
+            message: "Successfully fetched a expenseData",
             success: true,
             err: {},
         });

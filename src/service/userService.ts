@@ -4,11 +4,6 @@ import { SECRET } from "../config/config";
 import UserRepository from "../repository/userRepository";
 import { IUser } from "../model/User";
 
-interface ISignIn {
-  email: string;
-  password: string;
-}
-
 class UserService {
   userRepository: UserRepository;
   constructor() {
@@ -17,7 +12,10 @@ class UserService {
 
   async create(data: IUser) {
     try {
-      let user = await this.userRepository.create(data);
+      let hashedPassword = this.hashPassword(data.password);
+      let NewUser: IUser = { ...data, password: hashedPassword };
+      let user = await this.userRepository.create(NewUser);
+
       if (user) {
         let token = this.generateJwt(user);
         let newUser = {
@@ -34,13 +32,15 @@ class UserService {
     }
   }
 
-  async signIn(payload: ISignIn) {
+  async signin(email: string, password: string) {
     try {
-      console.log(payload);
+      let user = await this.userRepository.getUserByEmail(email);
+      console.log(user);
 
-      let user = await this.userRepository.getUserByEmail(payload.email);
       if (user) {
-        let compare = this.comparePassword(payload.password, user.password);
+        let compare = this.comparePassword(password, user.password);
+        console.log(compare);
+
         if (compare) {
           let token = this.generateJwt(user);
           let newUser = {
@@ -59,7 +59,7 @@ class UserService {
     }
   }
 
-  private comparePassword(password: string, hashedPassword: string) {
+  comparePassword(password: string, hashedPassword: string) {
     try {
       console.log(password);
       console.log(hashedPassword);
@@ -74,7 +74,7 @@ class UserService {
     }
   }
 
-  private generateJwt(user: any) {
+  generateJwt(user: any) {
     try {
       let payload = { name: user.name, id: user._id };
       let token = jwt.sign(payload, "avi", {
@@ -85,6 +85,11 @@ class UserService {
       console.log("Something went wrong in token generate fun");
       throw error;
     }
+  }
+
+  hashPassword(password: string) {
+    let hasdpassword = bcrypt.hashSync(password, 10);
+    return hasdpassword;
   }
 }
 

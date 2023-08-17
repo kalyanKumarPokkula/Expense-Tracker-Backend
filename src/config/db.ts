@@ -1,10 +1,9 @@
 import mongoose from "mongoose";
+import { DB_URL } from "./config";
 
 const connect = () => {
   try {
-    mongoose.connect(
-      `mongodb+srv://akhilkalyan:${"Kalyan123"}@cluster0.fqm7swm.mongodb.net/Expense-Tracker-db`
-    );
+    mongoose.connect(DB_URL);
     console.log("Connected to mongodb");
   } catch (error) {
     console.log("Not connected to monogodb");

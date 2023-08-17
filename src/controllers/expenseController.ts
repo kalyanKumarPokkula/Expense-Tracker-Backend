@@ -5,7 +5,12 @@ const expenseService: ExpenseService = new ExpenseService();
 
 const create = async (req: Request, res: Response) => {
   try {
-    const newBody = { ...req.body, date: new Date(), author: req.body.user.id };
+    const newBody = {
+      price: req.body.price,
+      title: req.body.title,
+      date: req.body.date,
+      author: req.body.user.id,
+    };
     console.log(req.body.user.id);
 
     let response = await expenseService.create(newBody, req.body.user.id);
@@ -30,7 +35,7 @@ const getExpenses = async (req: Request, res: Response) => {
     let response = await expenseService.getUserExpenses(req.body.user.id);
     return res.status(201).json({
       data: response?.expenses,
-      message: "Successfully created a expenseData",
+      message: "Successfully fetched a expenseData",
       success: true,
       err: {},
     });

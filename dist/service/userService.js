@@ -12,7 +12,9 @@ class UserService {
     }
     async create(data) {
         try {
-            let user = await this.userRepository.create(data);
+            let hashedPassword = this.hashPassword(data.password);
+            let NewUser = { ...data, password: hashedPassword };
+            let user = await this.userRepository.create(NewUser);
             if (user) {
                 let token = this.generateJwt(user);
                 let newUser = {
@@ -29,12 +31,13 @@ class UserService {
             throw error;
         }
     }
-    async signIn(payload) {
+    async signin(email, password) {
         try {
-            console.log(payload);
-            let user = await this.userRepository.getUserByEmail(payload.email);
+            let user = await this.userRepository.getUserByEmail(email);
+            console.log(user);
             if (user) {
-                let compare = this.comparePassword(payload.password, user.password);
+                let compare = this.comparePassword(password, user.password);
+                console.log(compare);
                 if (compare) {
                     let token = this.generateJwt(user);
                     let newUser = {
@@ -79,6 +82,10 @@ class UserService {
             console.log("Something went wrong in token generate fun");
             throw error;
         }
+    }
+    hashPassword(password) {
+        let hasdpassword = bcrypt_1.default.hashSync(password, 10);
+        return hasdpassword;
     }
 }
 exports.default = UserService;

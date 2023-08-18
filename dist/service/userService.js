@@ -48,8 +48,11 @@ class UserService {
                     return newUser;
                 }
                 else {
-                    throw { Message: "Incorrect password" };
+                    throw { message: "Incorrect password" };
                 }
+            }
+            else {
+                throw { message: "Incorrect email" };
             }
         }
         catch (error) {

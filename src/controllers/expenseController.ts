@@ -11,7 +11,6 @@ const create = async (req: Request, res: Response) => {
       date: req.body.date,
       author: req.body.user.id,
     };
-    console.log(req.body.user.id);
 
     let response = await expenseService.create(newBody, req.body.user.id);
     return res.status(201).json({

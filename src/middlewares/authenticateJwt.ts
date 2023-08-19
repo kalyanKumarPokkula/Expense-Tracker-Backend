@@ -9,11 +9,8 @@ export const authenticateJWT = async (
   next: NextFunction
 ) => {
   let AuthHeader = req.headers.authorization;
-  console.log(AuthHeader);
   if (AuthHeader) {
     let token = AuthHeader.split(" ")[1];
-    console.log(token);
-
     jwt.verify(token, "avi", async function (err: any, data: any) {
       if (err) {
         return res.status(403).json({

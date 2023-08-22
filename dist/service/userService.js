@@ -34,10 +34,8 @@ class UserService {
     async signin(email, password) {
         try {
             let user = await this.userRepository.getUserByEmail(email);
-            console.log(user);
             if (user) {
                 let compare = this.comparePassword(password, user.password);
-                console.log(compare);
                 if (compare) {
                     let token = this.generateJwt(user);
                     let newUser = {
@@ -62,10 +60,7 @@ class UserService {
     }
     comparePassword(password, hashedPassword) {
         try {
-            console.log(password);
-            console.log(hashedPassword);
             let compare = bcrypt_1.default.compareSync(password, hashedPassword);
-            console.log(compare);
             return compare;
         }
         catch (error) {

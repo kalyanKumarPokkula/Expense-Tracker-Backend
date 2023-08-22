@@ -13,6 +13,11 @@ router.get("/me", authenticateJWT, (req, res) => {
     data: req.body.user,
   });
 });
+
+router.get("/hello", (req, res) => {
+  res.send("Hello world");
+});
+
 router.post("/expense", authenticateJWT, create);
 router.get("/expenses", authenticateJWT, getExpenses);
 router.post("/signin", signin);

@@ -1,0 +1,13 @@
+{
+  "folders": [
+	{
+		"name": "build",
+		"path": "../../React/ExpenseTracker/build"
+	},
+	{
+		"name": "Expense-Tracker-Backend",
+		"path": "."
+	}
+],
+  "settings": {}
+}

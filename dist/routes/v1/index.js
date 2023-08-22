@@ -15,6 +15,9 @@ router.get("/me", authenticateJwt_1.authenticateJWT, (req, res) => {
         data: req.body.user,
     });
 });
+router.get("/hello", (req, res) => {
+    res.send("Hello world");
+});
 router.post("/expense", authenticateJwt_1.authenticateJWT, expenseController_1.create);
 router.get("/expenses", authenticateJwt_1.authenticateJWT, expenseController_1.getExpenses);
 router.post("/signin", userController_1.signin);

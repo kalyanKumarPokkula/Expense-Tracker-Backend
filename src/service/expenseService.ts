@@ -12,14 +12,10 @@ class ExpenseService {
 
   async create(data: IExpense, id: string) {
     try {
-    
-
       let expense = await this.expenseRepository.create(data);
-      
 
       if (expense) {
         let user = await this.userRepository.findById(id);
-        
 
         if (user) {
           user.expenses.push(expense);
@@ -40,6 +36,16 @@ class ExpenseService {
     try {
       let expenses = await this.userRepository.getUserExpenses(id);
       return expenses;
+    } catch (error) {
+      console.log("Something went wrong in user Service");
+      throw error;
+    }
+  }
+
+  async getExpense(id: string) {
+    try {
+      let expense = await this.expenseRepository.getExpense(id);
+      return expense;
     } catch (error) {
       console.log("Something went wrong in user Service");
       throw error;

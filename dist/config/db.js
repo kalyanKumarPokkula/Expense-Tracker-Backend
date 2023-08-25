@@ -6,7 +6,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const mongoose_1 = __importDefault(require("mongoose"));
 const connect = () => {
     try {
-        mongoose_1.default.connect("mongodb+srv://akhilkalyan:Kalyan123@cluster0.fqm7swm.mongodb.net/Expense-Tracker-db");
+        mongoose_1.default.connect("mongodb://127.0.0.1:27017/expensetracker");
         console.log("Connected to mongodb");
     }
     catch (error) {

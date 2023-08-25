@@ -40,5 +40,15 @@ class ExpenseService {
             throw error;
         }
     }
+    async getExpense(id) {
+        try {
+            let expense = await this.expenseRepository.getExpense(id);
+            return expense;
+        }
+        catch (error) {
+            console.log("Something went wrong in user Service");
+            throw error;
+        }
+    }
 }
 exports.default = ExpenseService;

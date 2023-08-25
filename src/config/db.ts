@@ -3,9 +3,7 @@ import { DB_URL } from "./config";
 
 const connect = () => {
   try {
-    mongoose.connect(
-      "mongodb+srv://akhilkalyan:Kalyan123@cluster0.fqm7swm.mongodb.net/Expense-Tracker-db"
-    );
+    mongoose.connect("mongodb://127.0.0.1:27017/expensetracker");
     console.log("Connected to mongodb");
   } catch (error) {
     console.log("Not connected to monogodb");

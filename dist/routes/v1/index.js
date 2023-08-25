@@ -21,4 +21,5 @@ router.get("/hello", (req, res) => {
 router.post("/expense", authenticateJwt_1.authenticateJWT, expenseController_1.create);
 router.get("/expenses", authenticateJwt_1.authenticateJWT, expenseController_1.getExpenses);
 router.post("/signin", userController_1.signin);
+router.get("/expense/:id", authenticateJwt_1.authenticateJWT, expenseController_1.getExpense);
 exports.default = router;

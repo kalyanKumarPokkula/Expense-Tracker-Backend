@@ -1,7 +1,11 @@
 import express from "express";
 
 import { signup, signin } from "../../controllers/userController";
-import { create, getExpenses } from "../../controllers/expenseController";
+import {
+  create,
+  getExpenses,
+  getExpense,
+} from "../../controllers/expenseController";
 import { authenticateJWT } from "../../middlewares/authenticateJwt";
 
 const router = express.Router();
@@ -21,5 +25,6 @@ router.get("/hello", (req, res) => {
 router.post("/expense", authenticateJWT, create);
 router.get("/expenses", authenticateJWT, getExpenses);
 router.post("/signin", signin);
+router.get("/expense/:id", authenticateJWT, getExpense);
 
 export default router;

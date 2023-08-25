@@ -9,6 +9,7 @@ const userService = new userService_1.default();
 const signup = async (req, res) => {
     try {
         const newBody = { ...req.body, expenses: [] };
+        console.log(newBody);
         let response = await userService.create(newBody);
         return res.status(201).json({
             data: response,

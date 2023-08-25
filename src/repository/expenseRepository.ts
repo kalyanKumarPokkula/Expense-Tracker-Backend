@@ -10,6 +10,16 @@ class ExpenseRepository {
       throw error;
     }
   }
+
+  async getExpense(id: string) {
+    try {
+      let expense = await Expense.findById(id);
+      return expense;
+    } catch (error) {
+      console.log("Something went wrong in user Repo");
+      throw error;
+    }
+  }
 }
 
 export default ExpenseRepository;

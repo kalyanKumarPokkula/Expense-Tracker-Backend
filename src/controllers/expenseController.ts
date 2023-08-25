@@ -34,7 +34,7 @@ const getExpenses = async (req: Request, res: Response) => {
     let response = await expenseService.getUserExpenses(req.body.user.id);
     return res.status(201).json({
       data: response?.expenses,
-      message: "Successfully fetched a expenseData",
+      message: "Successfully fetched a expensesData",
       success: true,
       err: {},
     });
@@ -48,4 +48,23 @@ const getExpenses = async (req: Request, res: Response) => {
   }
 };
 
-export { create, getExpenses };
+const getExpense = async (req: Request, res: Response) => {
+  try {
+    let response = await expenseService.getExpense(req.params.id);
+    return res.status(201).json({
+      data: response,
+      message: "Successfully fetched a expenseData",
+      success: true,
+      err: {},
+    });
+  } catch (error) {
+    return res.status(500).json({
+      data: {},
+      message: "Not able to get a expenses",
+      success: false,
+      err: error,
+    });
+  }
+};
+
+export { create, getExpenses, getExpense };

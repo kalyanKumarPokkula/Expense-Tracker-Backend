@@ -15,14 +15,14 @@ const createAndRunServer = async () => {
 
   app.use("/api", ApiRoutes);
 
-  // app.use(express.static("public"));
-  // app.use("/*", (req, res) => {
-  //   res.sendFile(path.join(__dirname, "/public/index.html"));
-  // });
+  app.use(express.static("public"));
+  app.use("/*", (req, res) => {
+    res.sendFile(path.join(__dirname, "/public/index.html"));
+  });
 
-  app.listen(3001, async () => {
+  app.listen(PORT, async () => {
     connect();
-    console.log(`Server started at port ${3001}`);
+    console.log(`Server started at port ${PORT}`);
   });
 };
 

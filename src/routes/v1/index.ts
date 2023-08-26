@@ -5,6 +5,8 @@ import {
   create,
   getExpenses,
   getExpense,
+  updateExpense,
+  deleteExpense,
 } from "../../controllers/expenseController";
 import { authenticateJWT } from "../../middlewares/authenticateJwt";
 
@@ -26,5 +28,7 @@ router.post("/expense", authenticateJWT, create);
 router.get("/expenses", authenticateJWT, getExpenses);
 router.post("/signin", signin);
 router.get("/expense/:id", authenticateJWT, getExpense);
+router.patch("/expense/:id", authenticateJWT, updateExpense);
+router.delete("/expense/:id", authenticateJWT, deleteExpense);
 
 export default router;

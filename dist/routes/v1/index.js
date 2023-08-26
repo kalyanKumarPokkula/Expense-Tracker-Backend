@@ -22,4 +22,6 @@ router.post("/expense", authenticateJwt_1.authenticateJWT, expenseController_1.c
 router.get("/expenses", authenticateJwt_1.authenticateJWT, expenseController_1.getExpenses);
 router.post("/signin", userController_1.signin);
 router.get("/expense/:id", authenticateJwt_1.authenticateJWT, expenseController_1.getExpense);
+router.patch("/expense/:id", authenticateJwt_1.authenticateJWT, expenseController_1.updateExpense);
+router.delete("/expense/:id", authenticateJwt_1.authenticateJWT, expenseController_1.deleteExpense);
 exports.default = router;

@@ -50,5 +50,25 @@ class ExpenseService {
             throw error;
         }
     }
+    async updateExpense(id, data) {
+        try {
+            let expense = await this.expenseRepository.updateExpense(id, data);
+            return expense;
+        }
+        catch (error) {
+            console.log("Something went wrong in user Service");
+            throw error;
+        }
+    }
+    async deleteExpense(id) {
+        try {
+            let expense = await this.expenseRepository.deleteExpense(id);
+            return expense;
+        }
+        catch (error) {
+            console.log("Something went wrong in user Service");
+            throw error;
+        }
+    }
 }
 exports.default = ExpenseService;

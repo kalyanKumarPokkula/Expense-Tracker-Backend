@@ -67,4 +67,41 @@ const getExpense = async (req: Request, res: Response) => {
   }
 };
 
-export { create, getExpenses, getExpense };
+const updateExpense = async (req: Request, res: Response) => {
+  try {
+    let response = await expenseService.updateExpense(req.params.id, req.body);
+    return res.status(201).json({
+      data: response,
+      message: "Successfully updated a expenseData",
+      success: true,
+      err: {},
+    });
+  } catch (error) {
+    return res.status(500).json({
+      data: {},
+      message: "Not able to update a expense",
+      success: false,
+      err: error,
+    });
+  }
+};
+
+const deleteExpense = async (req: Request, res: Response) => {
+  try {
+    let response = await expenseService.deleteExpense(req.params.id);
+    return res.status(201).json({
+      data: response,
+      message: "Successfully deleted a expense",
+      success: true,
+      err: {},
+    });
+  } catch (error) {
+    return res.status(500).json({
+      data: {},
+      message: "Not able to delete a expense",
+      success: false,
+      err: error,
+    });
+  }
+};
+export { create, getExpenses, getExpense, updateExpense, deleteExpense };

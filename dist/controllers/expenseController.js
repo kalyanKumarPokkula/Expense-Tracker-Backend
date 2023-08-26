@@ -3,7 +3,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getExpense = exports.getExpenses = exports.create = void 0;
+exports.deleteExpense = exports.updateExpense = exports.getExpense = exports.getExpenses = exports.create = void 0;
 const expenseService_1 = __importDefault(require("../service/expenseService"));
 const expenseService = new expenseService_1.default();
 const create = async (req, res) => {
@@ -72,3 +72,43 @@ const getExpense = async (req, res) => {
     }
 };
 exports.getExpense = getExpense;
+const updateExpense = async (req, res) => {
+    try {
+        let response = await expenseService.updateExpense(req.params.id, req.body);
+        return res.status(201).json({
+            data: response,
+            message: "Successfully updated a expenseData",
+            success: true,
+            err: {},
+        });
+    }
+    catch (error) {
+        return res.status(500).json({
+            data: {},
+            message: "Not able to update a expense",
+            success: false,
+            err: error,
+        });
+    }
+};
+exports.updateExpense = updateExpense;
+const deleteExpense = async (req, res) => {
+    try {
+        let response = await expenseService.deleteExpense(req.params.id);
+        return res.status(201).json({
+            data: response,
+            message: "Successfully deleted a expense",
+            success: true,
+            err: {},
+        });
+    }
+    catch (error) {
+        return res.status(500).json({
+            data: {},
+            message: "Not able to delete a expense",
+            success: false,
+            err: error,
+        });
+    }
+};
+exports.deleteExpense = deleteExpense;

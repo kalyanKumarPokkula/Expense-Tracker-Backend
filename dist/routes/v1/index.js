@@ -19,7 +19,7 @@ router.get("/hello", (req, res) => {
     res.send("Hello world");
 });
 router.post("/expense", authenticateJwt_1.authenticateJWT, expenseController_1.create);
-router.get("/expenses", authenticateJwt_1.authenticateJWT, expenseController_1.getExpenses);
+router.get("/expenses/:year", authenticateJwt_1.authenticateJWT, expenseController_1.getExpenses);
 router.post("/signin", userController_1.signin);
 router.get("/expense/:id", authenticateJwt_1.authenticateJWT, expenseController_1.getExpense);
 router.patch("/expense/:id", authenticateJwt_1.authenticateJWT, expenseController_1.updateExpense);

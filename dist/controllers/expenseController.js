@@ -34,9 +34,10 @@ const create = async (req, res) => {
 exports.create = create;
 const getExpenses = async (req, res) => {
     try {
-        let response = await expenseService.getUserExpenses(req.body.user.id);
+        console.log(req.params);
+        let response = await expenseService.getUserExpensesByYear(req.body.user.id, req.params.year);
         return res.status(201).json({
-            data: response === null || response === void 0 ? void 0 : response.expenses,
+            data: response,
             message: "Successfully fetched a expensesData",
             success: true,
             err: {},
@@ -94,6 +95,7 @@ const updateExpense = async (req, res) => {
 exports.updateExpense = updateExpense;
 const deleteExpense = async (req, res) => {
     try {
+        console.log(req.params);
         let response = await expenseService.deleteExpense(req.params.id);
         return res.status(201).json({
             data: response,

@@ -32,10 +32,23 @@ class ExpenseService {
     }
   }
 
-  async getUserExpenses(id: string) {
+  async getUserExpensesByYear(id: string, year: string) {
     try {
-      let expenses = await this.userRepository.getUserExpenses(id);
-      return expenses;
+      let response = await this.userRepository.getUserExpenses(id);
+      let NewExpenses = [];
+      // console.log(response);
+
+      if (response) {
+        for (var i = 0; i < response.expenses.length; i++) {
+          let date = new Date(response.expenses[i].date);
+          if (date.getFullYear().toString() === year) {
+            console.log(response.expenses[i]);
+
+            NewExpenses.push(response.expenses[i]);
+          }
+        }
+      }
+      return NewExpenses;
     } catch (error) {
       console.log("Something went wrong in user Service");
       throw error;

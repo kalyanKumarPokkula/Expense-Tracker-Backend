@@ -25,7 +25,7 @@ router.get("/hello", (req, res) => {
 });
 
 router.post("/expense", authenticateJWT, create);
-router.get("/expenses", authenticateJWT, getExpenses);
+router.get("/expenses/:year", authenticateJWT, getExpenses);
 router.post("/signin", signin);
 router.get("/expense/:id", authenticateJWT, getExpense);
 router.patch("/expense/:id", authenticateJWT, updateExpense);

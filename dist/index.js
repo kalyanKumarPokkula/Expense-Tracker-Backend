@@ -14,6 +14,9 @@ const createAndRunServer = async () => {
     app.use((0, cors_1.default)());
     app.use(body_parser_1.default.json());
     app.use(body_parser_1.default.urlencoded({ extended: true }));
+    app.get("/", (req, res) => {
+        res.send("Welcome to ExpenseTracker api");
+    });
     app.use("/api", routes_1.default);
     // app.use(express.static("public"));
     // app.use("/*", (req, res) => {

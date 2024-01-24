@@ -1,6 +1,4 @@
-import { Schema, model, ObjectId } from "mongoose";
-import bcrypt, { hashSync } from "bcrypt";
-import { SALT } from "../config/config";
+import { Schema, model } from "mongoose";
 
 interface IUser {
   name: string;

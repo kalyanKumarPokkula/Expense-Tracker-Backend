@@ -3,7 +3,7 @@ import { DB_URL } from "./config";
 
 const connect = () => {
   try {
-    mongoose.connect(DB_URL);
+    mongoose.connect(DB_URL!);
     console.log("Connected to mongodb");
   } catch (error) {
     console.log("Not connected to monogodb");

@@ -15,6 +15,10 @@ const expenseSchema = new mongoose_1.Schema({
         type: String,
         required: true,
     },
+    category: {
+        type: mongoose_1.Schema.Types.ObjectId,
+        ref: "ExpenseCategory",
+    },
     author: {
         type: mongoose_1.Schema.Types.ObjectId,
         ref: "User",

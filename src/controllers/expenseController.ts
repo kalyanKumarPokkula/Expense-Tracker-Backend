@@ -12,7 +12,14 @@ const create = async (req: Request, res: Response) => {
       author: req.body.user.id,
     };
 
-    let response = await expenseService.create(newBody, req.body.user.id);
+    console.log(newBody);
+
+    let response = await expenseService.create(
+      newBody,
+      req.body.user.id,
+      req.body.category
+    );
+
     return res.status(201).json({
       data: response,
       message: "Successfully created a expenseData",
@@ -31,11 +38,10 @@ const create = async (req: Request, res: Response) => {
 
 const getExpenses = async (req: Request, res: Response) => {
   try {
-    console.log(req.params);
-
-    let response = await expenseService.getUserExpensesByYear(
+    console.log(req.query);
+    let response = await expenseService.getUserExpensesByCategoryAndYear(
       req.body.user.id,
-      req.params.year
+      req.query
     );
     return res.status(201).json({
       data: response,

@@ -35,6 +35,7 @@ class UserRepository {
     async getUserExpenses(id) {
         try {
             let user = await User_1.User.findById(id).populate("expenses");
+            console.log(user);
             return user;
         }
         catch (error) {

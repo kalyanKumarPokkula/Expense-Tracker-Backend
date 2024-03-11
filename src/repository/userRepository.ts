@@ -34,6 +34,8 @@ class UserRepository {
   async getUserExpenses(id: string) {
     try {
       let user = await User.findById(id).populate("expenses");
+      console.log(user);
+
       return user;
     } catch (error) {
       console.log("Something went wrong in user Repo");

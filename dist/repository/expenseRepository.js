@@ -5,6 +5,7 @@ class ExpenseRepository {
     async create(data) {
         try {
             let expense = await Expense_1.Expense.create(data);
+            console.log(expense);
             return expense;
         }
         catch (error) {
@@ -16,6 +17,16 @@ class ExpenseRepository {
         try {
             let expense = await Expense_1.Expense.findById(id);
             return expense;
+        }
+        catch (error) {
+            console.log("Something went wrong in user Repo");
+            throw error;
+        }
+    }
+    async getExpensesByUser(id) {
+        try {
+            let expenses = await Expense_1.Expense.find({ author: id }).populate("category");
+            return expenses;
         }
         catch (error) {
             console.log("Something went wrong in user Repo");

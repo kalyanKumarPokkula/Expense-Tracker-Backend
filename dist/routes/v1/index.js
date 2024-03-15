@@ -15,6 +15,8 @@ router.get("/me", authenticateJwt_1.authenticateJWT, (req, res) => {
         data: req.body.user,
     });
 });
+router.post("/verify-otp", userController_1.verify_otp);
+router.post("/resend-otp", userController_1.resend_otp);
 router.get("/hello", (req, res) => {
     res.send("Hello world");
 });

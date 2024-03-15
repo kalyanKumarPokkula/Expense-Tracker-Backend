@@ -3,6 +3,8 @@ import bcrypt from "bcrypt";
 import { SECRET } from "../config/config";
 import UserRepository from "../repository/userRepository";
 import { IUser } from "../model/User";
+import generateOTP from "../config/generateOTP";
+import sendEmail from "../utils/mailer";
 
 class UserService {
   userRepository: UserRepository;
@@ -10,21 +12,45 @@ class UserService {
     this.userRepository = new UserRepository();
   }
 
+  async Resend_OTP(userId: string) {
+    try {
+      let user = await this.userRepository.findById(userId);
+      if (user) {
+        let otp = generateOTP();
+        user.otp = otp;
+        await user.save();
+        sendEmail(user.email, otp);
+        return true;
+      }
+
+      return false;
+    } catch (error) {
+      console.log("Something went wrong in user Service");
+      throw error;
+    }
+  }
+
   async create(data: IUser) {
     try {
+      let OTP = generateOTP();
+      data.otp = OTP;
       let hashedPassword = this.hashPassword(data.password);
       let NewUser: IUser = { ...data, password: hashedPassword };
       let user = await this.userRepository.create(NewUser);
 
       if (user) {
-        let token = this.generateJwt(user);
-        let newUser = {
-          name: user.name,
-          id: user._id,
-          token: token,
-        };
-        return newUser;
+        sendEmail(user.email, OTP);
       }
+
+      // if (user) {
+      //   let token = this.generateJwt(user);
+      //   let newUser = {
+      //     name: user.name,
+      //     id: user._id,
+      //     token: token,
+      //   };
+      //   return newUser;
+      // }
       return user;
     } catch (error) {
       console.log("Something went wrong in user Service");
@@ -39,12 +65,23 @@ class UserService {
       if (user) {
         let compare = this.comparePassword(password, user.password);
 
+        if (!user.isEmailVerified) {
+          return {
+            success: false,
+            id: user._id,
+            message: "Please verify your email",
+            isVerified: user.isEmailVerified,
+            err: {},
+          };
+        }
+
         if (compare) {
           let token = this.generateJwt(user);
           let newUser = {
             name: user.name,
             id: user._id,
             token: token,
+            isVerified: user.isEmailVerified,
           };
           return newUser;
         } else {
@@ -55,6 +92,30 @@ class UserService {
       }
     } catch (error) {
       console.log("Something went wrong in user Service");
+      throw error;
+    }
+  }
+
+  async verify_otp(otp: Number, userId: string) {
+    try {
+      let user = await this.userRepository.findById(userId);
+      if (user) {
+        if (user.otp === otp) {
+          user.isEmailVerified = true;
+          await user.save();
+          let token = this.generateJwt(user);
+          let newUser = {
+            name: user.name,
+            id: user._id,
+            token: token,
+          };
+          return newUser;
+        }
+      } else {
+        return null;
+      }
+    } catch (error) {
+      console.log("Something went wrong in token generate fun");
       throw error;
     }
   }

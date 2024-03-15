@@ -23,6 +23,19 @@ const userSchema = new mongoose_1.Schema({
             ref: "Expense",
         },
     ],
+    otp: {
+        type: String,
+    },
+    isEmailVerified: {
+        type: Boolean,
+        default: false,
+    },
+    forgotPasswordToken: {
+        type: String,
+    },
+    forgotPasswordExpiry: {
+        type: Date,
+    },
 }, { timestamps: true });
 const User = (0, mongoose_1.model)("User", userSchema);
 exports.User = User;

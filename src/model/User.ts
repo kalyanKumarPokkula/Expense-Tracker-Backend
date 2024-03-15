@@ -5,6 +5,10 @@ interface IUser {
   email: string;
   password: string;
   expenses: [Schema.Types.ObjectId];
+  otp: string;
+  isEmailVerified?: boolean;
+  forgotPasswordToken?: boolean;
+  forgotPasswordExpiry?: Date;
 }
 
 const userSchema: Schema = new Schema<IUser>(
@@ -29,7 +33,21 @@ const userSchema: Schema = new Schema<IUser>(
         ref: "Expense",
       },
     ],
+    otp: {
+      type: String,
+    },
+    isEmailVerified: {
+      type: Boolean,
+      default: false,
+    },
+    forgotPasswordToken: {
+      type: String,
+    },
+    forgotPasswordExpiry: {
+      type: Date,
+    },
   },
+
   { timestamps: true }
 );
 

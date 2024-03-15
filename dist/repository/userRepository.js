@@ -43,5 +43,6 @@ class UserRepository {
             throw error;
         }
     }
+    async verify_otp(otp) { }
 }
 exports.default = UserRepository;

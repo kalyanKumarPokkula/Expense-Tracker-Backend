@@ -1,6 +1,11 @@
 import express from "express";
 
-import { signup, signin } from "../../controllers/userController";
+import {
+  signup,
+  signin,
+  verify_otp,
+  resend_otp,
+} from "../../controllers/userController";
 import {
   create,
   getExpenses,
@@ -19,6 +24,9 @@ router.get("/me", authenticateJWT, (req, res) => {
     data: req.body.user,
   });
 });
+
+router.post("/verify-otp", verify_otp);
+router.post("/resend-otp", resend_otp);
 
 router.get("/hello", (req, res) => {
   res.send("Hello world");

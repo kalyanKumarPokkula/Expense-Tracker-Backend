@@ -19,6 +19,7 @@ const ExpenseCategorySchema = new mongoose_1.Schema({
             "Donations",
             "Miscellaneous",
             "Apparel",
+            "Savings",
             "Gifts",
         ],
         required: true,

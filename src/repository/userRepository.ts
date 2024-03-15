@@ -42,6 +42,8 @@ class UserRepository {
       throw error;
     }
   }
+
+  async verify_otp(otp: number) {}
 }
 
 export default UserRepository;
